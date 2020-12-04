@@ -150,14 +150,14 @@ func AppPostgresPassword(applicationIntent string) (password string) {
 // AppPostgresConn connection source
 // applicationIntent reader or writer
 func AppPostgresConn(applicationIntent string) (conn string) {
-	// ipAddress := AppPostgresIPAddress()
-	// port := AppPostgresPort()
+	ipAddress := AppPostgresIPAddress()
+	port := AppPostgresPort()
 	database := AppPostgresDatabase()
 	user := AppPostgresUser(applicationIntent)
 	password := AppPostgresPassword(applicationIntent)
 
-	conn = fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", // todo change in cluster
-		user, password, database)
+	conn = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", // todo change in cluster
+		ipAddress, port, user, password, database)
 
 	return
 }

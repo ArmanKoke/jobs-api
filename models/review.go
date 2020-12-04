@@ -31,7 +31,8 @@ func Create(ctx context.Context, log logger.LogEnv, dbEnv databases.DBEnv, reque
 		db = dbEnv.PostgresDBWriter()
 	}
 
-	tsql := `INSERT INTO reviews (val, comment) VALUES (@value, @comment)`
+	tsql := `INSERT INTO reviews (val, comment)
+			 VALUES (@Val, @Comment)`
 
 	stmt, err := db.Prepare(tsql)
 	if err != nil {
@@ -39,8 +40,8 @@ func Create(ctx context.Context, log logger.LogEnv, dbEnv databases.DBEnv, reque
 	}
 
 	result, err := stmt.ExecContext(ctx,
-		sql.Named("value", request.Value),
-		sql.Named("comment", request.Comment))
+		sql.Named("Val", request.Value),
+		sql.Named("Comment", request.Comment))
 	if err != nil {
 		return
 	}

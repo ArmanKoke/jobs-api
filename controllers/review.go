@@ -45,7 +45,7 @@ func (rc *ReviewController) Create(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	}
 
-	zapLog.Info("Request data", zap.String("ReviewID", decodedReview.ID))
+	zapLog.Info("Request data", zap.Any("review", decodedReview))
 
 	decodedReview.Validate()
 

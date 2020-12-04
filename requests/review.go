@@ -7,7 +7,6 @@ import (
 // Review input
 // swagger:parameters CreateRequest
 type Review struct {
-	ID      string  `json:"id"`
 	Value   string  `json:"value"`
 	Comment *string `json:"comment"`
 }
