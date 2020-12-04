@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  api:
+    check:
+        test: [ "CMD", "curl", "-sS", "http://0.0.0.0:8080/health" ]
+        interval: 10s
+        retries: 3
+    image: localhost/go/jobs-api:latest
+    network_mode: 'default'
+    ports:
+      - 8080:8080
+    deploy:
+      placement:
+        constraints:
+          - "node.labels.production==true"
+    environment:
+      ELASTIC_APM_LOG_FILE: stdout
+      ELASTIC_APM_SERVER_URLS: http://127.0.0.1:8200
+      ELASTIC_APM_ENVIRONMENT: production
+    env_file:
+      - /app/$SERVICE_NAME/.env

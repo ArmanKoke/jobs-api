@@ -17,4 +17,3 @@ Application for finding jobs and services with full cycle of service provision a
 ### Local
 - (linux) `make table` create db and table in docker
 - (linux) `make swagger`
-- (linux) `make v3`

@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: dumb123!
+  api:
+    check:
+        test: [ "CMD", "curl", "-sS", "http://0.0.0.0:8080/health" ]
+        interval: 10s
+        retries: 3
+    image: localhost/go/jobs-api:latest
+    network_mode: 'default'
+    ports:
+      - 8080:8080
+    deploy:
+      placement:
+        constraints:
+          - "node.labels.dev==true"
+    environment:
+      ELASTIC_APM_LOG_FILE: stdout
+      ELASTIC_APM_SERVER_URLS: http://127.0.0.1:8200
+      ELASTIC_APM_ENVIRONMENT: dev
+    env_file:
+      - /app/$SERVICE_NAME/.env
